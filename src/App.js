@@ -7,6 +7,9 @@ import {
 import firebase from "firebase/app";
 import "firebase/auth";
 import { config } from "./test-credentials";
+import Button from "@material-ui/core/Button";
+
+import "./App.css";
 
 const IDontCareAboutFirebaseAuth = () => {
   return <div>This part won't react to firebase auth changes</div>;
@@ -14,9 +17,9 @@ const IDontCareAboutFirebaseAuth = () => {
 
 const App = () => {
   return (
-    <div>
+    <div className="App-header">
       <IDontCareAboutFirebaseAuth />
-      <FirebaseAuthProvider {...config} firebase={firebase} >
+      <FirebaseAuthProvider {...config} firebase={firebase}>
         <div>
           Hello <div>From Auth Provider Child 1</div>
           <FirebaseAuthConsumer>
@@ -25,26 +28,30 @@ const App = () => {
                 return (
                   <div>
                     <h2>You're signed in 🎉 </h2>
-                    <button
+                    <Button
+                      variant="outlined"
+                      color="primary"
                       onClick={() => {
                         firebase.app().auth().signOut();
                       }}
                     >
                       Sign out
-                    </button>
+                    </Button>
                   </div>
                 );
               } else {
                 return (
                   <div>
                     <h2>You're not signed in </h2>
-                    <button
+                    <Button
+                      variant="outlined"
+                      color="primary"
                       onClick={() => {
                         firebase.app().auth().signInAnonymously();
                       }}
                     >
                       Sign in anonymously
-                    </button>
+                    </Button>
                   </div>
                 );
               }
@@ -52,15 +59,16 @@ const App = () => {
           </FirebaseAuthConsumer>
         </div>
         <div>
-        <button
-        onClick={() => {
-          const googleAuthProvider = new firebase.auth.GoogleAuthProvider();
-          firebase.auth().signInWithPopup(googleAuthProvider);
-        }}
-      >
-        Sign in with Google
-      </button>
-
+          <Button
+            variant="outlined"
+            color="primary"
+            onClick={() => {
+              const googleAuthProvider = new firebase.auth.GoogleAuthProvider();
+              firebase.auth().signInWithPopup(googleAuthProvider);
+            }}
+          >
+            Sign in with Google
+          </Button>
         </div>
       </FirebaseAuthProvider>
     </div>
