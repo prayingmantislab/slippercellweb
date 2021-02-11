@@ -8,20 +8,27 @@ import firebase from "firebase/app";
 import "firebase/auth";
 import { config } from "./test-credentials";
 import Button from "@material-ui/core/Button";
+import MUIDataTable from "mui-datatables";
 
 import "./App.css";
 
-const IDontCareAboutFirebaseAuth = () => {
-  return <div>This part won't react to firebase auth changes</div>;
+const columns = ["Participants", "Id", "Hour", "Noise", "Light"]
+const data = [
+  ["Asi Meir", "123412345", "18:00", 5, 6],
+  ["Liran Meir", "123412345", "18:00", 10, 5],
+  ["Joe James", "123412345", "19:00", 12, 7],
+  ["jessie James", "123412345", "20:00", 13, 6]
+]
+
+const options = {
+  filterType: 'checkbox',
 };
 
 const App = () => {
   return (
-    <div className="App-header">
-      <IDontCareAboutFirebaseAuth />
+    <div className="grid-container">
       <FirebaseAuthProvider {...config} firebase={firebase}>
         <div>
-          Hello <div>From Auth Provider Child 1</div>
           <FirebaseAuthConsumer>
             {({ isSignedIn, firebase }) => {
               if (isSignedIn === true) {
@@ -71,6 +78,14 @@ const App = () => {
           </Button>
         </div>
       </FirebaseAuthProvider>
+      <div>
+        <MUIDataTable
+        tilte={"Dashboard"}
+        data={data}
+        columns={columns}
+        options={options}
+        />
+      </div>
     </div>
   );
 };
